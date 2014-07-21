@@ -193,6 +193,13 @@ class TallyManager
     void clearLastEvent();
 
     /**
+     *  \brief getEvent
+     *
+     *  Read-only access to the tally event status
+     */
+    const TallyEvent& getEvent();
+
+    /**
      * \brief Call compute_score() for all active DAGMC tallies
      *
      * Resets the tally event once all scores are computed.

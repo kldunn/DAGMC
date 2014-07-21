@@ -146,21 +146,29 @@ void TallyManager::clearLastEvent()
     event.current_cell        = 0;
 }
 //---------------------------------------------------------------------------//
+const TallyEvent& TallyManager::getEvent()
+{
+   return event;
+}
+//---------------------------------------------------------------------------//
 // Note: the event is set just before updateTallies is called
 void TallyManager::updateTallies()
 {
-    std::map<int, Tally*>::iterator map_it;
-    for (map_it = observers.begin(); map_it != observers.end(); ++map_it)
-    {
-        Tally *tally = map_it->second;
+   if (event.type != TallyEvent::NONE)
+   {
+      std::map<int, Tally*>::iterator map_it;
+      for (map_it = observers.begin(); map_it != observers.end(); ++map_it)
+      {
+          Tally *tally = map_it->second;
 
-        // skip events involving particles not expected by the tally
-        if (tally->input_data.particle == event.particle)
-        { 
-           tally->compute_score(event);
-        }
+          //  skip events involving particles not expected by the tally
+          if (tally->input_data.particle == event.particle)
+          { 
+             tally->compute_score(event);
+          }
+      }
+      clearLastEvent();
     }
-    clearLastEvent();
 }
 //---------------------------------------------------------------------------//
 void TallyManager::endHistory()
@@ -314,7 +322,10 @@ bool TallyManager::setEvent(TallyEvent::EventType type, unsigned int particle,
     event.position  = moab::CartVect(x, y, z);
     event.direction = moab::CartVect(u, v, w);
     // This should already be normalized
-    event.direction.normalize();
+    if (event.direction.length() > 0.0)
+    {
+       event.direction.normalize();
+    }
     
     if (particle_energy < 0.0)
     {

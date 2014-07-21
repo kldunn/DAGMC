@@ -64,6 +64,9 @@ TARGET_LINK_LIBRARIES(test_TallyData ${LIBRARIES})
 ADD_EXECUTABLE(test_Tally test_Tally.cpp)
 TARGET_LINK_LIBRARIES(test_Tally ${LIBRARIES})
 
+ADD_EXECUTABLE(test_TallyManager test_TallyManager.cpp)
+TARGET_LINK_LIBRARIES(test_TallyManager ${LIBRARIES})
+
 # enable DAGMC Tally test cases
 ENABLE_TESTING()
 
@@ -77,3 +80,4 @@ ADD_TEST(test_CellTally test_CellTally)
 ADD_TEST(test_TallyEvent test_TallyEvent)
 ADD_TEST(test_TallyData test_TallyData)
 ADD_TEST(test_Tally test_Tally)
+ADD_TEST(test_TallyManager test_TallyManager)
