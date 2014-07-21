@@ -140,7 +140,7 @@ TEST(TallyEventTest, TestTrack)
 
 }
 //---------------------------------------------------------------------------//
-// FIXTURE-BASED TESTS: TallyDataTest
+// FIXTURE-BASED TESTS: TallyManagerTest
 //---------------------------------------------------------------------------//
 TEST_F(TallyManagerTest, TestBadCollision)
 {
@@ -152,6 +152,21 @@ TEST_F(TallyManagerTest, TestBadCollision)
 			     total_cross_section,
 			     cell_id);
 
+   EXPECT_FALSE(isSet);
+}
+//---------------------------------------------------------------------------//
+TEST_F(TallyManagerTest, TestBadTrack)
+{
+   double u = 1.4;
+   double v = 0.0;
+   double w = -9.1;
+   double track_length = -2.7;
+
+   bool isSet = manager->setTrackEvent(particle, x, y, z, u, v, w,
+                                      particle_energy,
+				      particle_weight,
+				      track_length,
+				      cell_id);
    EXPECT_FALSE(isSet);
 }
 //---------------------------------------------------------------------------//
